@@ -1,5 +1,9 @@
 package main
 
+import (
+  "math"
+)
+
 // Copyright (C) 2017  Jan Wollschläger <jmw.tau@gmail.com>
 // This file is part of goccs.
 //
@@ -23,7 +27,7 @@ type vec3 struct {
 }
 
 type line struct {
-    origin float64
+    origin vec3
     direction vec3
 }
 
@@ -33,7 +37,22 @@ type sphere struct {
 }
 
 
+func lineSphereIntersections(lne line, sph sphere)(float64,float64,bool) {
+    oc := vec3{ x: lne.origin.x - sph.center.x,
+              y: lne.origin.y - sph.center.y,
+              z: lne.origin.z - sph.center.z,
+              }
+    ocSum := oc.x + oc.y + oc.z
+    ocAbsSq := oc.x * oc.x + oc.y * oc.y + oc.z * oc.z
+    ocSq := ocSum * ocSum
+    radicant := ocSq - ocAbsSq + sph.radius * sph.radius
+    if radicant < 0{
+      return 0.0, 0.0, false
+    }
+    radicant = math.Sqrt(radicant)
+    return -ocSum + radicant, ocSum - radicant, true
 
+}
 
 
 
