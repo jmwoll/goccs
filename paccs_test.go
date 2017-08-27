@@ -91,22 +91,22 @@ func TestPACCSButane(t *testing.T) {
 }
 
 func TestRotateMolecule(t *testing.T) {
+  logTestName("TestRotateMolecule")
   floatDelta := 0.00001;
   mol := Loadxyzstring("C 0 0 1\nN 0 0 -1")
   rotmol := RotateMolecule(mol,math.Pi,0,0) // 90
-  fmt.Println("rotating")
-  fmt.Println(mol)
-  fmt.Println("180 degrees around x axis results in")
-  fmt.Println(rotmol)
-  if (rotmol.xs[0] - mol.xs[0]) > floatDelta || (rotmol.ys[0] - mol.ys[0]) > floatDelta{
-    t.Errorf("wrong effect of rotation")
-  }
-  if (rotmol.xs[1] - mol.xs[1]) > floatDelta || (rotmol.ys[1] - mol.ys[1]) > floatDelta{
-    t.Errorf("wrong effect of rotation")
-  }
-  if rotmol.zs[0] + mol.zs[0] > floatDelta || rotmol.zs[1] + mol.zs[1] > floatDelta {
-    t.Errorf("wrong effect of rotation")
-  }
+  logTest("rotating the molecule")
+  logTest(mol)
+  logTest("180 degrees around x axis results in the molecule")
+  logTest(rotmol)
+  assertTrue(rotmol.xs[0] - mol.xs[0] < floatDelta && //
+    rotmol.ys[0] - mol.ys[0] < floatDelta && //
+    rotmol.xs[1] - mol.xs[1] < floatDelta && //
+     rotmol.ys[1] - mol.ys[1] < floatDelta, //
+     "the x and y coordinates should not change", t)
+  assertTrue(rotmol.zs[0] + mol.zs[0] < floatDelta && //
+     rotmol.zs[1] + mol.zs[1] < floatDelta, //
+     "the z coordinate should be inverted", t)
 }
 
 
