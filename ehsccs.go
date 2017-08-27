@@ -46,11 +46,11 @@ func lineSphereIntersections(lne line, sph sphere)(float64,float64,bool) {
     ocAbsSq := oc.x * oc.x + oc.y * oc.y + oc.z * oc.z
     ocSq := ocSum * ocSum
     radicant := ocSq - ocAbsSq + sph.radius * sph.radius
-    if radicant < 0{
+    if radicant < 0 {
       return 0.0, 0.0, false
     }
     radicant = math.Sqrt(radicant)
-    return -ocSum + radicant, ocSum - radicant, true
+    return -ocSum - radicant, -ocSum + radicant, true
 
 }
 

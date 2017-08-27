@@ -17,57 +17,43 @@ package main
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import (
+        "fmt"
         "testing"
       )
 
-// Given a line in parametric form and a sphere, lineSphereIntersections
-// should return the parameters of the line sphere intersection or
-// false, if there is no intersection.
-func TestLineSphereIntersections(t *testing.T) {
-    logTestName("TestLineSphereIntersections")
+func assertTrue (predicate bool, msg interface{}, t *testing.T) {
+  if !predicate {
+    logFail(msg)
+    t.Errorf("")
+  } else {
+    logPassed(msg)
+  }
+}
 
-    logTest("given a line (0,0,0) + t*(0,0,1)")
-    lne := line{ origin: vec3{x: 0, y: 0, z: 0},
-                 direction: vec3{x: 0, y: 0, z: 1},
-                }
-    logTest("and a sphere with radius 1 at (0,0,3)")
-    sph := sphere{ center: vec3{x: 0, y: 0, z: 3},
-                   radius: 1,
-                 }
-    i1, i2, _ := lineSphereIntersections(lne, sph)
-    assertTrue(i1 == 2 && i2 == 4, "the intersections should be t = 2,4", t)
+func logPassed (msg interface{}) {
+  fmt.Print("\033[92m")
+  fmt.Print("\t");fmt.Println(msg);
+  fmt.Print("\033[0m")
+}
 
+func logTest (msg interface{}) {
+  fmt.Print("\t");fmt.Println(msg)
+}
 
+func logTestInline (msg interface{}) {
+  fmt.Print("\t");fmt.Print(msg)
+}
+
+func logFail (msg interface{}) {
+  fmt.Println("\033[91m")
+  fmt.Print("\t");fmt.Println(msg);
+  fmt.Println("\033[0m")
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
+func logTestName (msg interface{}) {
+  fmt.Println("\033[94m")
+  fmt.Println("")
+  fmt.Print("-- ");fmt.Println(msg);
+  fmt.Println("\033[0m")
+}

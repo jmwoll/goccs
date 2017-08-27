@@ -22,60 +22,72 @@ import ("fmt" // for inspection
       )
 
 func TestPACCSRotamerSimple(t *testing.T) {
+  logTestName("TestPACCSRotamerSimple")
   mol := Loadxyzstring("C 0 0 1")
   ccs := PACCSRotamer(mol, 100000, PAParametersforname("mobcal"))
-  fmt.Println("ccs of single rotamer of mol")
-  fmt.Println(mol)
-  fmt.Println("is:")
-  fmt.Println(ccs)
+  logTest("given the single rotamer")
+  logTestInline(mol)
+  logTest("")
+  assertTrue(math.Abs(ccs - 23) < 0.3,
+    "the single-rotamer-ccs should be 23 +- 0.3", t)
 }
 
 func TestPACCSSimple(t *testing.T) {
+  logTestName("TestPACCSSimple")
   mol := Loadxyzstring("C 0 0 1")
   ccs := PACCS(mol, 10000, 1000, PAParametersforname("mobcal"))
-  fmt.Println("rotationally averaged ccs of mol")
-  fmt.Println(mol)
-  fmt.Println("is:")
-  fmt.Println(ccs)
+  logTest("given the molecule")
+  logTest(mol)
+  assertTrue(math.Abs(ccs - 23) < 0.3,
+    "the ccs should be 23 +- 0.3", t)
 }
 
-func TestPACCSAlkanes(t *testing.T) {
+func TestPACCSMethane(t *testing.T) {
+  logTestName("TestPACCSMethane")
   delta_ccs := 0.3
   mol := Loadxyzfile("xyz/methane.xyz")
   exp_ccs := 27.5 // calculated with mobcal
   ccs := PACCS(mol, 10000, 1000, PAParametersforname("mobcal"))
-  fmt.Println("-- ccs of methane")
-  fmt.Print("\tis:  ");fmt.Print(ccs);fmt.Print("  should be:  ");fmt.Println(exp_ccs);
-  if math.Abs(ccs - exp_ccs) > delta_ccs {
-    t.Errorf("calculated ccs differs from mobcal reference values!")
-  }
+  logTest("given the molecule methane")
+  logTest(mol)
+  assertTrue(math.Abs(ccs - exp_ccs) < delta_ccs,
+    "the ccs should be 27.5 +- 0.3", t)
+}
 
-  mol = Loadxyzfile("xyz/ethane.xyz")
-  exp_ccs = 35.81 // calculated with mobcal
-  ccs = PACCS(mol, 10000, 1000, PAParametersforname("mobcal"))
-  fmt.Println("-- ccs of ethane")
-  fmt.Print("\tis:  ");fmt.Print(ccs);fmt.Print("  should be:  ");fmt.Println(exp_ccs);
-  if math.Abs(ccs - exp_ccs) > delta_ccs {
-    t.Errorf("calculated ccs differs from mobcal reference values!")
-  }
+func TestPACCSEthane(t *testing.T) {
+  logTestName("TestPACCSEthane")
+  delta_ccs := 0.3
+  mol := Loadxyzfile("xyz/ethane.xyz")
+  exp_ccs := 35.81 // calculated with mobcal
+  ccs := PACCS(mol, 10000, 1000, PAParametersforname("mobcal"))
+  logTest("given the molecule ethane")
+  logTest(mol)
+  assertTrue(math.Abs(ccs - exp_ccs) < delta_ccs,
+    "the ccs should be 35.81 +- 0.3", t)
+}
 
-  mol = Loadxyzfile("xyz/propane.xyz")
-  exp_ccs = 42.46 // calculated with mobcal
-  ccs = PACCS(mol, 10000, 1000, PAParametersforname("mobcal"))
-  fmt.Println("-- ccs of propane")
-  fmt.Print("\tis:  ");fmt.Print(ccs);fmt.Print("  should be:  ");fmt.Println(exp_ccs);
-  if math.Abs(ccs - exp_ccs) > delta_ccs {
-    t.Errorf("calculated ccs differs from mobcal reference values!")
-  }
+func TestPACCSPropane(t *testing.T) {
+  logTestName("TestPACCSPropane")
+  delta_ccs := 0.3
+  mol := Loadxyzfile("xyz/propane.xyz")
+  exp_ccs := 42.46 // calculated with mobcal
+  ccs := PACCS(mol, 10000, 1000, PAParametersforname("mobcal"))
+  logTest("given the molecule propane")
+  logTest(mol)
+  assertTrue(math.Abs(ccs - exp_ccs) < delta_ccs,
+    "the ccs should be 42.46 +- 0.3", t)
+}
 
-  mol = Loadxyzfile("xyz/butane.xyz")
-  exp_ccs = 50.11 // calculated with mobcal
-  ccs = PACCS(mol, 10000, 1000, PAParametersforname("mobcal"))
-  fmt.Println("-- ccs of butane")
-  fmt.Print("\tis:  ");fmt.Print(ccs);fmt.Print("  should be:  ");fmt.Println(exp_ccs);
-  if math.Abs(ccs - exp_ccs) > delta_ccs {
-    t.Errorf("calculated ccs differs from mobcal reference values!")
-  }
+func TestPACCSButane(t *testing.T) {
+  logTestName("TestPACCSButane")
+  delta_ccs := 0.3
+  mol := Loadxyzfile("xyz/butane.xyz")
+  exp_ccs := 50.11 // calculated with mobcal
+  ccs := PACCS(mol, 10000, 1000, PAParametersforname("mobcal"))
+  logTest("given the molecule butane")
+  logTest(mol)
+  assertTrue(math.Abs(ccs - exp_ccs) < delta_ccs,
+    "the ccs should be 50.11 +- 0.3", t)
 }
 
 func TestRotateMolecule(t *testing.T) {
