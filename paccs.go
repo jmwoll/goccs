@@ -24,20 +24,6 @@ import (
   "strconv"
 )
 
-type ParameterSet map[string]float64
-
-// The parameters to use, i.e. radii of atoms in angstrom.
-func Parametersforname(name string) ParameterSet {
-    if name == "mobcal" {
-      return map[string]float64{
-        "H": 2.2, "C": 2.7, "N": 2.7, "O": 2.7,
-      }
-    }
-    if name == "siu_guo_2010" || name == ""{
-      return ParameterSet {  "H": 2.01, "C": 2.35, "N": 2.26, "O": 2.26, }
-    }
-    return nil
-}
 
 // a molecule consists of the list of atom labels, the x,y,z coordinates
 // of the atoms, so it is essentially just represented as the list of its
