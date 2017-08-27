@@ -16,7 +16,7 @@ package main
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import ("fmt" // for inspection
+import (
         "testing"
         "math"
       )
@@ -111,14 +111,14 @@ func TestRotateMolecule(t *testing.T) {
 
 
 func TestLoadxyzstring(t *testing.T) {
-  fmt.Println("TestLoadxyzstring")
+  logTestName("TestLoadxyzstring")
 
   var labels []string; var xs []float64; var ys []float64; var zs []float64;
   mol := Loadxyzstring("C 0 0 1\n")
   labels = mol.atom_labels; xs = mol.xs; ys = mol.ys; zs = mol.zs;
-  fmt.Println("Loadxyzstring(C 0 0 1\\n):")
-  fmt.Println(labels)
-  fmt.Println(xs);fmt.Println(ys);fmt.Println(zs)
+  logTest("Loadxyzstring(C 0 0 1\\n):")
+  logTest(labels)
+  logTest(xs);logTest(ys);logTest(zs)
   if labels == nil{
     t.Errorf("Loadxyzstring('C 0 0 1\n') should not be null!")
   }
@@ -128,9 +128,9 @@ func TestLoadxyzstring(t *testing.T) {
 
   mol = Loadxyzstring("C 0 0 1\nN 0 0 2\n")
   labels = mol.atom_labels; xs = mol.xs; ys = mol.ys; zs = mol.zs;
-  fmt.Println("Loadxyzstring(C 0 0 1\\nN 0 0 2\\n):")
-  fmt.Println(labels)
-  fmt.Println(xs);fmt.Println(ys);fmt.Println(zs)
+  logTest("Loadxyzstring(C 0 0 1\\nN 0 0 2\\n):")
+  logTest(labels)
+  logTest(xs);logTest(ys);logTest(zs)
   if labels == nil{
     t.Errorf("Loadxyzstring('C 0 0 1\nN 0 0 2\n') should not be null!")
   }
@@ -140,9 +140,9 @@ func TestLoadxyzstring(t *testing.T) {
 
   mol = Loadxyzstring("3\nA test xyzfile\nC 0 0 1\nN 0 0 2\nBr 11.1 -22.2 -33.3\n")
   labels = mol.atom_labels; xs = mol.xs; ys = mol.ys; zs = mol.zs;
-  fmt.Println("Loadxyzstring('3\\nA test xyzfile\\nC 0 0 1\\nN 0 0 2\\nBr 11.1 -22.2 -33.3\\n'):")
-  fmt.Println(labels)
-  fmt.Println(xs);fmt.Println(ys);fmt.Println(zs)
+  logTest("Loadxyzstring('3\\nA test xyzfile\\nC 0 0 1\\nN 0 0 2\\nBr 11.1 -22.2 -33.3\\n'):")
+  logTest(labels)
+  logTest(xs);logTest(ys);logTest(zs)
   if labels == nil{
     t.Errorf("Loadxyzstring('3\\nA test xyzfile\\nC 0 0 1\\nN 0 0 2\\nBr 11.1 -22.2 -33.3\\n') should not be null!")
   }
