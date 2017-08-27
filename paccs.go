@@ -17,7 +17,6 @@ package main
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import (
-  "fmt"
   "io/ioutil"
   "math"
   "math/rand"
@@ -178,10 +177,6 @@ func Loadxyzfile(xyzfile string) Molecule {
     xyzbytes,err := ioutil.ReadFile(xyzfile)
     if err != nil {panic(err)}
     return Loadxyzstring(string(xyzbytes))
-}
-
-func main(){
-  fmt.Println("it works")
 }
 
 
