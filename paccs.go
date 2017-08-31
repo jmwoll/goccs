@@ -55,6 +55,16 @@ func maxSlice (slice []float64)float64{
      return rslt
 }
 
+func filterPositive(slice []float64) []float64 {
+    var rslt []float64
+    for _,val := range(slice){
+      if val >= 0 {
+        rslt = append(rslt,val)
+      }
+    }
+    return rslt
+}
+
 // Calculates the projection approximation collision cross section
 // for a molecule by averaging over all rotamers.
 func PACCS (mol Molecule, trialsperrotamer int, numrotamers int, parameters ParameterSet) float64 {

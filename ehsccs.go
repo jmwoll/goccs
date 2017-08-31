@@ -2,6 +2,7 @@ package main
 
 import (
   "math"
+  "math/rand"
 )
 
 // Copyright (C) 2017  Jan Wollschläger <jmw.tau@gmail.com>
@@ -63,6 +64,92 @@ func vecLen(vec vec3) float64 {
 func toUnitVec(vec vec3) vec3 {
     return vecMult(vec, 1 / vecLen(vec))
 }
+
+func dotProduct(fstVec vec3, sndVec vec3) float64 {
+  return fstVec.x * sndVec.x + fstVec.y * sndVec.y + fstVec.z * sndVec.z
+}
+
+
+// Calculates the exact hard sphere (EHS) collision cross section
+// for a single rotamer.
+func EHSCCSRotamer (mol Molecule, trials int, parameters ParameterSet) float64 {
+
+    spheres := moleculeToSpheres(mol, parameters)
+
+    padding := 5.0 // padding of 5 angstrom sufficient
+    minx := minSlice(mol.xs) - padding; maxx := maxSlice(mol.xs) + padding;
+    miny := minSlice(mol.ys) - padding; maxy := maxSlice(mol.ys) + padding;
+
+    maxminx := maxx-minx; maxminy := maxy-miny;
+    hits := 0.0
+    for count := 0; count < trials; count++ {
+      randx := rand.Float64() * maxminx + minx
+      randy := rand.Float64() * maxminy + miny
+
+      a := line{direction: vec3{x: 0, y: 0, z: 1}, origin: vec3{x: randx, y: randy, z: -100}}
+      b := lineSpheresTrajectory(a, spheres)
+      ab := dotProduct(a.direction,b.direction)
+      abs_a := vecLen(a.direction)
+      abs_b := vecLen(b.direction)
+      hits += 1 - ab / (abs_a * abs_b)
+    }
+    return (float64(hits) / float64(trials)) * maxminx * maxminy
+}
+
+func moleculeToSpheres (mol Molecule, parameters ParameterSet) []sphere {
+    var spheres []sphere
+    for idx,atm_lab := range mol.atom_labels {
+      spheres = append(spheres, sphere{center: vec3{x: mol.xs[idx], y: mol.ys[idx], z: mol.zs[idx]}, radius: parameters[atm_lab]})
+    }
+    return spheres
+}
+
+
+func lineSpheresTrajectory(lne line, spheres []sphere) line {
+    for true {
+      nextIntsctLineScalar,nextIntsctSphere := nextLineSpheresIntersection(lne, spheres)
+      if nextIntsctLineScalar == math.MaxFloat64 { // ???
+        break
+      }
+      lne = reflectLineOnSphere(lne, nextIntsctSphere, nextIntsctLineScalar)
+      pointOfCollision := vecPlus(vecMult(lne.direction, nextIntsctLineScalar),lne.origin)
+      lne.origin = pointOfCollision // move ray to current position
+    }
+    return lne
+}
+
+
+func reflectLineOnSphere(lne line, sph sphere, intsctLineScalar float64) line {
+    pointOfCollision := vecPlus(vecMult(lne.direction, intsctLineScalar),lne.origin)
+    // see https://math.stackexchange.com/questions/2334939/reflection-of-line-on-a-sphere/2334963?noredirect=1#comment4807112_2334963
+    // 2 * [(line-direction) * (point-of-collision - center-of-sphere)] *
+    // (point-of-collision - center-of-sphere) - (line-direction)
+    // == 2 * [v * (x-c)] * (x-c) -v
+    x_c := vecMinus(pointOfCollision,sph.center)
+    newDir := vecMinus(vecMult(x_c, 2 * dotProduct(lne.direction,x_c)), lne.direction)
+    newDir = vecMult(newDir, 1.0 / vecLen(newDir)) // dont forget to normalize
+    return line{direction: newDir, origin: lne.origin}
+}
+
+
+func nextLineSpheresIntersection(lne line, spheres []sphere) (float64,sphere) {
+    var nextIntsctSphere sphere
+    nextIntsctLineScalar := math.MaxFloat64
+    for _,sph := range spheres {
+      fstIntersection,sndIntersection,success := lineSphereIntersections(lne, sph)
+      if !success { continue }
+      intersections := filterPositive([]float64{fstIntersection,sndIntersection})
+      for _,intersectionScalar := range intersections {
+        if intersectionScalar < nextIntsctLineScalar {
+          nextIntsctLineScalar = intersectionScalar
+          nextIntsctSphere = sph
+        }
+      }
+    }
+    return nextIntsctLineScalar,nextIntsctSphere
+}
+
+
 
 // computes the intersections of the line lne with the sphere sph:
 //  according to https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection

@@ -20,6 +20,23 @@ import (
         "testing"
       )
 
+
+func TestEHSCCSRotamerSimple(t *testing.T) {
+    logTestName("TestEHSCCSRotamerSimple")
+    mol := Loadxyzstring("C 0 0 1")
+    ccs := EHSCCSRotamer(mol, 1000, PAParametersforname("mobcal"))
+    logTest("EHS CCS:");logTest(ccs);
+    assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
+}
+
+func TestEHSCCSRotamerMethane(t *testing.T) {
+    logTestName("TestEHSCCSRotamerMethane")
+    mol := Loadxyzfile("xyz/methane.xyz")
+    ccs := EHSCCSRotamer(mol, 10000, PAParametersforname("mobcal"))
+    logTest("EHS CCS:");logTest(ccs);
+    assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
+}
+
 // Given a line in parametric form and a sphere, lineSphereIntersections
 // should return the parameters of the line sphere intersection or
 // false, if there is no intersection.
