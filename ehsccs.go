@@ -36,22 +36,65 @@ type sphere struct {
     center vec3
 }
 
+func vecPlus(fstVec vec3, sndVec vec3) vec3 {
+    return vec3 { x: fstVec.x + sndVec.x, y: fstVec.y + sndVec.y, z: fstVec.z + sndVec.z }
+}
 
+func vecMult(vec vec3, scalar float64) vec3 {
+  return vec3 { x: vec.x * scalar, y: vec.y * scalar, z: vec.z * scalar }
+}
+
+func vecMinus(fstVec vec3, sndVec vec3) vec3 {
+  return vec3 { x: fstVec.x - sndVec.x, y: fstVec.y - sndVec.y, z: fstVec.z - sndVec.z }
+}
+
+func vecDist(fstVec vec3, sndVec vec3) float64 {
+  return vecLen(vecMinus(fstVec, sndVec))
+}
+
+func vecLenSquare(vec vec3) float64 {
+    return (vec.x*vec.x + vec.y*vec.y + vec.z*vec.z)
+}
+
+func vecLen(vec vec3) float64 {
+    return math.Sqrt(vec.x*vec.x + vec.y*vec.y + vec.z*vec.z)
+}
+
+func toUnitVec(vec vec3) vec3 {
+    return vecMult(vec, 1 / vecLen(vec))
+}
+
+// computes the intersections of the line lne with the sphere sph:
+//  according to https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection
+//  a line given in the parametric form
+//    x = o + d * L
+//  will have intersections with the sphere
+//    ||x - c||^2 = r^2
+//  at the two intersections given by
+//    d1,2 = -(L * (o - c)) +- ( (L * (o-c))^2 - ||o - c||^2 +r^2 )^1/2
+//  In the function below, we will use the substitutions
+//    loc := L * (o - c)
+//  and
+//    oc := ||o - c||^2
 func lineSphereIntersections(lne line, sph sphere)(float64,float64,bool) {
-    oc := vec3{ x: lne.origin.x - sph.center.x,
-              y: lne.origin.y - sph.center.y,
-              z: lne.origin.z - sph.center.z,
+
+    if math.Abs(vecLen(lne.direction)-1.0) > 0.00001 {
+        panic("non-unit vector encountered for direction of line in lineSphereIntersections")
+    }
+    locVec := vec3{ x: (lne.origin.x - sph.center.x) * lne.direction.x,
+              y: (lne.origin.y - sph.center.y) * lne.direction.y,
+              z: (lne.origin.z - sph.center.z) * lne.direction.z,
               }
-    ocSum := oc.x + oc.y + oc.z
-    ocAbsSq := oc.x * oc.x + oc.y * oc.y + oc.z * oc.z
-    ocSq := ocSum * ocSum
-    radicant := ocSq - ocAbsSq + sph.radius * sph.radius
-    if radicant < 0 {
+    ocVec := vecMinus(lne.origin, sph.center)
+    loc := locVec.x + locVec.y + locVec.z
+    oc := vecLenSquare(ocVec)
+
+    radicant := loc * loc - oc + sph.radius * sph.radius
+    if radicant <= 0.0 {
       return 0.0, 0.0, false
     }
     radicant = math.Sqrt(radicant)
-    return -ocSum - radicant, -ocSum + radicant, true
-
+    return -loc - radicant, -loc + radicant, true
 }
 
 
