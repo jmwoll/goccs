@@ -18,23 +18,36 @@ package main
 
 import (
         "testing"
+        "math"
       )
 
 
 func TestEHSCCSRotamerSimple(t *testing.T) {
     logTestName("TestEHSCCSRotamerSimple")
     mol := Loadxyzstring("C 0 0 1")
-    ccs := EHSCCSRotamer(mol, 1000, PAParametersforname("mobcal"))
+    ccs := EHSCCSRotamer(mol, 1000, EHSParametersforname("mobcal"))
     logTest("EHS CCS:");logTest(ccs);
     assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
 }
 
-func TestEHSCCSRotamerMethane(t *testing.T) {
+func TestEHSCCSMethane(t *testing.T) {
     logTestName("TestEHSCCSRotamerMethane")
     mol := Loadxyzfile("xyz/methane.xyz")
-    ccs := EHSCCSRotamer(mol, 10000, PAParametersforname("mobcal"))
+    ccs := EHSCCS(mol, 10000, 300, EHSParametersforname("mobcal"))
     logTest("EHS CCS:");logTest(ccs);
     assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
+    refccs := 27.602
+    assertTrue(math.Abs(ccs - refccs) < 0.5, "CCS values differs from reference", t)
+}
+
+func TestEHSCCSButane(t *testing.T) {
+    logTestName("TestEHSCCSRotamerButane")
+    mol := Loadxyzfile("xyz/butane.xyz")
+    ccs := EHSCCS(mol, 10000, 300, EHSParametersforname("mobcal"))
+    logTest("EHS CCS:");logTest(ccs);
+    assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
+    refccs := 52.101
+    assertTrue(math.Abs(ccs - refccs) < 0.5, "CCS values differs from reference", t)
 }
 
 // Given a line in parametric form and a sphere, lineSphereIntersections

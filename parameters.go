@@ -31,3 +31,10 @@ func PAParametersforname(name string) ParameterSet {
     }
     return nil
 }
+
+func EHSParametersforname(name string) ParameterSet {
+  if name == "mobcal"{
+    return map[string]float64{"H": 2.38, "C": 3.043, "N": 3.043, "O": 3.043}
+  }
+  return nil
+}

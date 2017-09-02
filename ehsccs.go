@@ -69,6 +69,17 @@ func dotProduct(fstVec vec3, sndVec vec3) float64 {
   return fstVec.x * sndVec.x + fstVec.y * sndVec.y + fstVec.z * sndVec.z
 }
 
+// Calculates the exact hard sphere (EHS) collision cross section
+// for a molecule by averaging over all rotamers.
+func EHSCCS (mol Molecule, trialsperrotamer int, numrotamers int, parameters ParameterSet) float64 {
+    var ccssum float64 = 0.0
+    for count := 0; count < numrotamers; count++{
+      mol = RotateMolecule(mol, 4 * math.Pi * rand.Float64(), 4 * math.Pi * rand.Float64(), 4 * math.Pi * rand.Float64())
+      ccssum += EHSCCSRotamer(mol, trialsperrotamer, parameters)
+    }
+    return ccssum / float64(numrotamers)
+}
+
 
 // Calculates the exact hard sphere (EHS) collision cross section
 // for a single rotamer.
@@ -89,9 +100,9 @@ func EHSCCSRotamer (mol Molecule, trials int, parameters ParameterSet) float64 {
       a := line{direction: vec3{x: 0, y: 0, z: 1}, origin: vec3{x: randx, y: randy, z: -100}}
       b := lineSpheresTrajectory(a, spheres)
       ab := dotProduct(a.direction,b.direction)
-      abs_a := vecLen(a.direction)
-      abs_b := vecLen(b.direction)
-      hits += 1 - ab / (abs_a * abs_b)
+      //abs_a := vecLen(a.direction) // => unit vector anyway
+      //abs_b := vecLen(b.direction) // => unit vector anyway
+      hits += 1 - ab // / (abs_a * abs_b)
     }
     return (float64(hits) / float64(trials)) * maxminx * maxminy
 }
@@ -138,7 +149,7 @@ func nextLineSpheresIntersection(lne line, spheres []sphere) (float64,sphere) {
     for _,sph := range spheres {
       fstIntersection,sndIntersection,success := lineSphereIntersections(lne, sph)
       if !success { continue }
-      intersections := filterPositive([]float64{fstIntersection,sndIntersection})
+      intersections := filterAboveZero([]float64{fstIntersection,sndIntersection})
       for _,intersectionScalar := range intersections {
         if intersectionScalar < nextIntsctLineScalar {
           nextIntsctLineScalar = intersectionScalar
