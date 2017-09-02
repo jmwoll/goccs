@@ -125,14 +125,22 @@ func moleculeToSpheres (mol Molecule, parameters ParameterSet) []sphere {
 
 
 func lineSpheresTrajectory(lne line, spheres []sphere) line {
+    orderCount := 0
     for true {
       nextIntsctLineScalar,nextIntsctSphere := nextLineSpheresIntersection(lne, spheres)
       if nextIntsctLineScalar == math.MaxFloat64 { // ???
         break
       }
-      lne = reflectLineOnSphere(lne, nextIntsctSphere, nextIntsctLineScalar)
       pointOfCollision := vecPlus(vecMult(lne.direction, nextIntsctLineScalar),lne.origin)
+      lne = reflectLineOnSphere(lne, nextIntsctSphere, nextIntsctLineScalar)
       lne.origin = pointOfCollision // move ray to current position
+      // count the order of the collision:
+      // if the order is bigger than X, return the current line
+      // to prevent too deep trajectories (e.g. ping-pong reflections)
+      orderCount += 1
+      if orderCount >= 5 {
+        return lne
+      }
     }
     return lne
 }
@@ -197,7 +205,7 @@ func lineSphereIntersections(lne line, sph sphere)(float64,float64,bool) {
     oc := vecLenSquare(ocVec)
 
     radicant := loc * loc - oc + sph.radius * sph.radius
-    if radicant <= 0.0 {
+    if radicant < 0.0 {
       return 0.0, 0.0, false
     }
     radicant = math.Sqrt(radicant)

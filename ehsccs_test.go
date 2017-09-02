@@ -63,12 +63,42 @@ func TestEHSCCSPentane(t *testing.T) {
 }
 
 func TestEHSCCSOctabenzone(t *testing.T) {
-    logTestName("TestEHSCCSROctabenzone")
+    logTestName("TestEHSCCSOctabenzone")
     mol := Loadxyzfile("xyz/octabenzone.xyz")
     ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
     logTest("EHS CCS:");logTest(ccs);
     assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
     refccs := 157.8
+    assertTrue(math.Abs(ccs - refccs) < 0.5, "CCS values differs from reference", t)
+}
+
+func TestEHSCCSAbacavir(t *testing.T) {
+    logTestName("TestEHSCCSAbacavir")
+    mol := Loadxyzfile("xyz/abacavir.xyz")
+    ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+    logTest("EHS CCS:");logTest(ccs);
+    assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
+    refccs := 126.28
+    assertTrue(math.Abs(ccs - refccs) < 0.5, "CCS values differs from reference", t)
+}
+
+func TestEHSCCSPaclitaxel(t *testing.T) {
+    logTestName("TestEHSCCSPaclitaxel")
+    mol := Loadxyzfile("xyz/paclitaxel.xyz")
+    ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+    logTest("EHS CCS:");logTest(ccs);
+    assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
+    refccs := 231.0
+    assertTrue(math.Abs(ccs - refccs) < 0.5, "CCS values differs from reference", t)
+}
+
+func TestEHSCCSCiclosporin(t *testing.T) {
+    logTestName("TestEHSCCSCiclosporin")
+    mol := Loadxyzfile("xyz/ciclosporin.xyz")
+    ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+    logTest("EHS CCS:");logTest(ccs);
+    assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
+    refccs := 306.0
     assertTrue(math.Abs(ccs - refccs) < 0.5, "CCS values differs from reference", t)
 }
 

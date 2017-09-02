@@ -1,0 +1,286 @@
+-- adamantane
+input file label = C10H16 -  2Jul17 18:38
+  temperature = 2.9800E+02
+
+  mobility calculation by MOBIL4 (HS scattering)
+  inverse average PA mobility = 1.1917E+03
+  average PA cross section = 6.4799E+01
+  inverse average EHS mobility = 1.2551E+03
+  average EHS cross section = 6.8247E+01
+
+  mobility calculation by MOBIL2 (trajectory method)
+  inverse average (second order) TM mobility = 1.1103E+03
+  average TM cross section = 6.0377E+01
+  standard deviation (percent) = 1.3845E+00
+
+
+-- penguinone
+input file label = C10H14O1 -  2Jul17 18:44
+temperature = 2.9800E+02
+
+mobility calculation by MOBIL4 (HS scattering)
+inverse average PA mobility = 1.3553E+03
+average PA cross section = 7.3598E+01
+inverse average EHS mobility = 1.4249E+03
+average EHS cross section = 7.7377E+01
+
+mobility calculation by MOBIL2 (trajectory method)
+inverse average (second order) TM mobility = 1.2712E+03
+average TM cross section = 6.9032E+01
+standard deviation (percent) = 1.8050E+00
+
+-- barrelene
+input file label = C8H8 -  2Jul17 19:03
+ temperature = 2.9800E+02
+
+ mobility calculation by MOBIL4 (HS scattering)
+ inverse average PA mobility = 1.0388E+03
+ average PA cross section = 5.6733E+01
+ inverse average EHS mobility = 1.0737E+03
+ average EHS cross section = 5.8639E+01
+
+ mobility calculation by MOBIL2 (trajectory method)
+ inverse average (second order) TM mobility = 9.3944E+02
+ average TM cross section = 5.1309E+01
+ standard deviation (percent) = 1.1878E+00
+
+ -- hirsutene
+ input file label = C14H22 -  2Jul17 19:06
+  temperature = 2.9800E+02
+
+  mobility calculation by MOBIL4 (HS scattering)
+  inverse average PA mobility = 1.6374E+03
+  average PA cross section = 8.8677E+01
+  inverse average EHS mobility = 1.7457E+03
+  average EHS cross section = 9.4542E+01
+
+  mobility calculation by MOBIL2 (trajectory method)
+  inverse average (second order) TM mobility = 1.5584E+03
+  average TM cross section = 8.4395E+01
+  standard deviation (percent) = 1.9800E+00
+
+ -- testosterone
+ input file label = C20H30O1 -  2Jul17 21:28
+temperature = 2.9800E+02
+
+mobility calculation by MOBIL4 (HS scattering)
+inverse average PA mobility = 2.0143E+03
+average PA cross section = 1.0871E+02
+inverse average EHS mobility = 2.1610E+03
+average EHS cross section = 1.1663E+02
+
+mobility calculation by MOBIL2 (trajectory method)
+inverse average (second order) TM mobility = 1.9928E+03
+average TM cross section = 1.0755E+02
+standard deviation (percent) = 1.0690E+00
+
+-- paclitaxel
+input file label = C47H51N1O14 -  2Jul17 21:39
+  temperature = 2.9800E+02
+
+  mobility calculation by MOBIL4 (HS scattering)
+  inverse average PA mobility = 4.3000E+03
+  average PA cross section = 2.3100E+02
+  inverse average EHS mobility = 4.7931E+03
+  average EHS cross section = 2.5749E+02
+
+  mobility calculation by MOBIL2 (trajectory method)
+  inverse average (second order) TM mobility = 4.4809E+03
+  average TM cross section = 2.4071E+02
+  standard deviation (percent) = 2.1468E+00
+
+-- abacavir
+input file label = C14H18N6O1 -  2Jul17 22:02
+  temperature = 2.9800E+02
+
+  mobility calculation by MOBIL4 (HS scattering)
+  inverse average PA mobility = 2.1729E+03
+  average PA cross section = 1.1727E+02
+  inverse average EHS mobility = 2.3398E+03
+  average EHS cross section = 1.2628E+02
+
+  mobility calculation by MOBIL2 (trajectory method)
+  inverse average (second order) TM mobility = 2.1240E+03
+  average TM cross section = 1.1463E+02
+  standard deviation (percent) = 1.6391E+00
+
+-- ciclosperin
+input file label = C50H89N9O10 -  2Jul17 22:08
+ temperature = 2.9800E+02
+
+ mobility calculation by MOBIL4 (HS scattering)
+ inverse average PA mobility = 5.3288E+03
+ average PA cross section = 2.8618E+02
+ inverse average EHS mobility = 6.0531E+03
+ average EHS cross section = 3.2508E+02
+
+ mobility calculation by MOBIL2 (trajectory method)
+ inverse average (second order) TM mobility = 5.6969E+03
+ average TM cross section = 3.0595E+02
+ standard deviation (percent) = 1.8913E+00
+
+-- codein
+input file label = C19H23N1O2 -  2Jul17 22:19
+temperature = 2.9800E+02
+
+mobility calculation by MOBIL4 (HS scattering)
+inverse average PA mobility = 1.9330E+03
+average PA cross section = 1.0430E+02
+inverse average EHS mobility = 2.0792E+03
+average EHS cross section = 1.1218E+02
+
+mobility calculation by MOBIL2 (trajectory method)
+inverse average (second order) TM mobility = 1.9181E+03
+average TM cross section = 1.0349E+02
+standard deviation (percent) = 1.2392E+00
+
+-- talinolol
+input file label = C20H33N3O3 -  2Jul17 22:29
+  temperature = 2.9800E+02
+
+  mobility calculation by MOBIL4 (HS scattering)
+  inverse average PA mobility = 3.0791E+03
+  average PA cross section = 1.6593E+02
+  inverse average EHS mobility = 3.3134E+03
+  average EHS cross section = 1.7856E+02
+
+  mobility calculation by MOBIL2 (trajectory method)
+  inverse average (second order) TM mobility = 2.9841E+03
+  average TM cross section = 1.6081E+02
+  standard deviation (percent) = 1.8056E+00
+
+-- yangonin
+input file label = C15H14O4 -  2Jul17 23:30
+  temperature = 2.9800E+02
+
+  mobility calculation by MOBIL4 (HS scattering)
+  inverse average PA mobility = 2.1389E+03
+  average PA cross section = 1.1552E+02
+  inverse average EHS mobility = 2.2332E+03
+  average EHS cross section = 1.2061E+02
+
+  mobility calculation by MOBIL2 (trajectory method)
+  inverse average (second order) TM mobility = 2.0294E+03
+  average TM cross section = 1.0960E+02
+  standard deviation (percent) = 1.8661E+00
+
+  -- vernakalant
+  input file label = C21H32O4 -  2Jul17 23:35
+ temperature = 2.9800E+02
+
+ mobility calculation by MOBIL4 (HS scattering)
+ inverse average PA mobility = 2.7052E+03
+ average PA cross section = 1.4582E+02
+ inverse average EHS mobility = 2.9246E+03
+ average EHS cross section = 1.5764E+02
+
+ mobility calculation by MOBIL2 (trajectory method)
+ inverse average (second order) TM mobility = 2.6397E+03
+ average TM cross section = 1.4229E+02
+ standard deviation (percent) = 1.9492E+00
+
+ -- octabenzone
+
+  input file label = C21H26O3 -  2Jul17 23:44
+  temperature = 2.9800E+02
+
+  mobility calculation by MOBIL4 (HS scattering)
+  inverse average PA mobility = 2.7659E+03
+  average PA cross section = 1.4915E+02
+  inverse average EHS mobility = 2.9260E+03
+  average EHS cross section = 1.5778E+02
+
+  mobility calculation by MOBIL2 (trajectory method)
+  inverse average (second order) TM mobility = 2.6317E+03
+  average TM cross section = 1.4191E+02
+  standard deviation (percent) = 1.3800E+00
+
+  -- melatonin
+  input file label = C13H16N2O2 -  2Jul17 23:49
+temperature = 2.9800E+02
+
+mobility calculation by MOBIL4 (HS scattering)
+inverse average PA mobility = 2.0150E+03
+average PA cross section = 1.0892E+02
+inverse average EHS mobility = 2.1331E+03
+average EHS cross section = 1.1531E+02
+
+mobility calculation by MOBIL2 (trajectory method)
+inverse average (second order) TM mobility = 1.9379E+03
+average TM cross section = 1.0476E+02
+standard deviation (percent) = 2.2578E+00
+
+-- epirubicin
+input file label = C27H29N1O11 -  2Jul17 23:55
+temperature = 2.9800E+02
+
+mobility calculation by MOBIL4 (HS scattering)
+inverse average PA mobility = 3.2105E+03
+average PA cross section = 1.7270E+02
+inverse average EHS mobility = 3.4668E+03
+average EHS cross section = 1.8649E+02
+
+mobility calculation by MOBIL2 (trajectory method)
+inverse average (second order) TM mobility = 3.1873E+03
+average TM cross section = 1.7145E+02
+standard deviation (percent) = 1.2579E+00
+
+-- alprenolol
+input file label = C15H23N1O2 -  3Jul17 21:42
+temperature = 2.9800E+02
+
+mobility calculation by MOBIL4 (HS scattering)
+inverse average PA mobility = 2.1318E+03
+average PA cross section = 1.1517E+02
+inverse average EHS mobility = 2.2925E+03
+average EHS cross section = 1.2385E+02
+
+mobility calculation by MOBIL2 (trajectory method)
+inverse average (second order) TM mobility = 2.0714E+03
+average TM cross section = 1.1190E+02
+standard deviation (percent) = 1.4915E+00
+
+-- trioxifene
+input file label = C29H29N1O3 -  3Jul17 21:57
+temperature = 2.9800E+02
+
+mobility calculation by MOBIL4 (HS scattering)
+inverse average PA mobility = 3.1825E+03
+average PA cross section = 1.7134E+02
+inverse average EHS mobility = 3.3830E+03
+average EHS cross section = 1.8214E+02
+
+mobility calculation by MOBIL2 (trajectory method)
+inverse average (second order) TM mobility = 3.0961E+03
+average TM cross section = 1.6669E+02
+standard deviation (percent) = 2.4174E+00
+
+-- methylaminoethanol
+input file label = C3H9N1O1 -  3Jul17 22:07
+temperature = 2.9800E+02
+
+mobility calculation by MOBIL4 (HS scattering)
+inverse average PA mobility = 9.8005E+02
+average PA cross section = 5.3907E+01
+inverse average EHS mobility = 1.0188E+03
+average EHS cross section = 5.6038E+01
+
+mobility calculation by MOBIL2 (trajectory method)
+inverse average (second order) TM mobility = 8.8214E+02
+average TM cross section = 4.8524E+01
+standard deviation (percent) = 1.5345E+00
+
+-- nanokid
+input file label = C39H42O2 -  3Jul17 22:13
+  temperature = 2.9800E+02
+
+  mobility calculation by MOBIL4 (HS scattering)
+  inverse average PA mobility = 4.1864E+03
+  average PA cross section = 2.2519E+02
+  inverse average EHS mobility = 4.5877E+03
+  average EHS cross section = 2.4678E+02
+
+  mobility calculation by MOBIL2 (trajectory method)
+  inverse average (second order) TM mobility = 4.1957E+03
+  average TM cross section = 2.2570E+02
+  standard deviation (percent) = 1.6578E+00
