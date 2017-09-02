@@ -17,6 +17,7 @@ package main
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import (
+        "fmt"
         "testing"
         "math"
       )
@@ -33,7 +34,8 @@ func TestEHSCCSRotamerSimple(t *testing.T) {
 func TestEHSCCSMethane(t *testing.T) {
     logTestName("TestEHSCCSRotamerMethane")
     mol := Loadxyzfile("xyz/methane.xyz")
-    ccs := EHSCCS(mol, 10000, 300, EHSParametersforname("mobcal"))
+    logTest(mol)
+    ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
     logTest("EHS CCS:");logTest(ccs);
     assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
     refccs := 27.602
@@ -43,11 +45,104 @@ func TestEHSCCSMethane(t *testing.T) {
 func TestEHSCCSButane(t *testing.T) {
     logTestName("TestEHSCCSRotamerButane")
     mol := Loadxyzfile("xyz/butane.xyz")
-    ccs := EHSCCS(mol, 10000, 300, EHSParametersforname("mobcal"))
+    ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
     logTest("EHS CCS:");logTest(ccs);
     assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
     refccs := 52.101
     assertTrue(math.Abs(ccs - refccs) < 0.5, "CCS values differs from reference", t)
+}
+
+func TestEHSCCSPentane(t *testing.T) {
+    logTestName("TestEHSCCSRotamerPentane")
+    mol := Loadxyzfile("xyz/pentane.xyz")
+    ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+    logTest("EHS CCS:");logTest(ccs);
+    assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
+    refccs := 59.653
+    assertTrue(math.Abs(ccs - refccs) < 0.5, "CCS values differs from reference", t)
+}
+
+func TestEHSCCSOctabenzone(t *testing.T) {
+    logTestName("TestEHSCCSROctabenzone")
+    mol := Loadxyzfile("xyz/octabenzone.xyz")
+    ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+    logTest("EHS CCS:");logTest(ccs);
+    assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
+    refccs := 157.8
+    assertTrue(math.Abs(ccs - refccs) < 0.5, "CCS values differs from reference", t)
+}
+
+
+func TestReflectLineOnsphere(t *testing.T) {
+    logTestName("TestReflectLineOnsphere (1.)")
+    lne := line{ origin: vec3{x:0,y:0,z:0}, direction: vec3{x:1,y:0,z:0}}
+    sph := sphere{ center: vec3{x:5,y:0,z:0}, radius: 1.0}
+    logTest(fmt.Sprintf("given a line %v",lne))
+    logTest(fmt.Sprintf("and a sphere %v",sph))
+    intsct_1, intsct_2, _ := lineSphereIntersections(lne,sph)
+    intscts := []float64{intsct_1,intsct_2}
+    logTest("line sphere intersections are:");logTest(intscts);
+    intsct := minSlice(filterAboveZero(intscts))
+    logTest("smallest intersection (where hit happens)")
+    logTest(intsct)
+    logTest("reflected line")
+    rslt := reflectLineOnSphere(lne,sph,intsct)
+    logTest(rslt)
+    assertTrue(rslt.direction.x == -1,fmt.Sprintf("the reflected line should be %v (and was %v)",
+      line{origin:vec3{x:0,y:0,z:0},direction:vec3{x:-1,y:0,z:0}},rslt),t)
+
+    logTestName("TestReflectLineOnsphere (2.)")
+    lne = line{ origin: vec3{x:0,y:0,z:0}, direction: vec3{x:0,y:1,z:0}}
+    sph = sphere{ center: vec3{x:0,y:5,z:0}, radius: 1.0}
+    logTest(fmt.Sprintf("given a line %v",lne))
+    logTest(fmt.Sprintf("and a sphere %v",sph))
+    intsct_1, intsct_2, _ = lineSphereIntersections(lne,sph)
+    intscts = []float64{intsct_1,intsct_2}
+    logTest("line sphere intersections are:");logTest(intscts);
+    intsct = minSlice(filterAboveZero(intscts))
+    logTest("smallest intersection (where hit happens)")
+    logTest(intsct)
+    logTest("reflected line")
+    rslt = reflectLineOnSphere(lne,sph,intsct)
+    logTest(rslt)
+    assertTrue(rslt.direction.y == -1,fmt.Sprintf("the reflected line should be %v (and was %v)",
+      line{origin:vec3{x:0,y:0,z:0},direction:vec3{x:0,y:-1,z:0}},rslt),t)
+
+    logTestName("TestReflectLineOnsphere (3.)")
+    lne = line{ origin: vec3{x:0,y:0,z:0}, direction: vec3{x:0,y:0,z:1}}
+    sph = sphere{ center: vec3{x:0,y:0,z:5}, radius: 2.0}
+    logTest(fmt.Sprintf("given a line %v",lne))
+    logTest(fmt.Sprintf("and a sphere %v",sph))
+    intsct_1, intsct_2, _ = lineSphereIntersections(lne,sph)
+    intscts = []float64{intsct_1,intsct_2}
+    logTest("line sphere intersections are:");logTest(intscts);
+    intsct = minSlice(filterAboveZero(intscts))
+    logTest("smallest intersection (where hit happens)")
+    logTest(intsct)
+    logTest("reflected line")
+    rslt = reflectLineOnSphere(lne,sph,intsct)
+    logTest(rslt)
+    assertTrue(rslt.direction.z == -1,fmt.Sprintf("the reflected line should be %v (and was %v)",
+      line{origin:vec3{x:0,y:0,z:0},direction:vec3{x:0,y:0,z:-1}},rslt),t)
+
+    logTestName("TestReflectLineOnsphere (4.)")
+    lne = line{ origin: vec3{x:0,y:0,z:0}, direction: vec3{x:1,y:1,z:0}}
+    lne.direction = toUnitVec(lne.direction)
+    sph = sphere{ center: vec3{x:1,y:2,z:0}, radius: 1.0}
+    logTest(fmt.Sprintf("given a line %v",lne))
+    logTest(fmt.Sprintf("and a sphere %v",sph))
+    intsct_1, intsct_2, _ = lineSphereIntersections(lne,sph)
+    intscts = []float64{intsct_1,intsct_2}
+    logTest("line sphere intersections are:");logTest(intscts);
+    intsct = minSlice(filterAboveZero(intscts))
+    logTest("smallest intersection (where hit happens)")
+    logTest(intsct)
+    logTest("reflected line")
+    rslt = reflectLineOnSphere(lne,sph,intsct)
+    expRslt := line{ origin: vec3{x:0,y:0,z:0}, direction: toUnitVec(vec3{x:1,y:-1,z:0})}
+    logTest(rslt)
+    assertTrue(vecEquals(rslt.direction,expRslt.direction),fmt.Sprintf("the reflected line should be %v (and was %v)",
+      expRslt,rslt),t)
 }
 
 // Given a line in parametric form and a sphere, lineSphereIntersections

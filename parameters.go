@@ -34,7 +34,9 @@ func PAParametersforname(name string) ParameterSet {
 
 func EHSParametersforname(name string) ParameterSet {
   if name == "mobcal"{
-    return map[string]float64{"H": 2.38, "C": 3.043, "N": 3.043, "O": 3.043}
+    //return map[string]float64{"H": 2.38, "C": 3.043, "N": 3.043, "O": 3.043}
+    //return map[string]float64{"H": 1.5, "C": 2.7, "N": 2.50, "O": 2.50}
+    return map[string]float64{"H": 2.2, "C": 2.7, "N": 2.70, "O": 2.70}
   }
   return nil
 }

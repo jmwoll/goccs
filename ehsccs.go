@@ -1,6 +1,7 @@
 package main
 
 import (
+  "fmt"
   "math"
   "math/rand"
 )
@@ -35,6 +36,12 @@ type line struct {
 type sphere struct {
     radius float64
     center vec3
+}
+
+func vecEquals(fstVec vec3, sndVec vec3) bool {
+  fstxyz := fmt.Sprintf("%.5f %.5f %.5f",fstVec.x,fstVec.y,fstVec.z)
+  sndxyz := fmt.Sprintf("%.5f %.5f %.5f",fstVec.x,fstVec.y,fstVec.z)
+  return fstxyz == sndxyz
 }
 
 func vecPlus(fstVec vec3, sndVec vec3) vec3 {
@@ -97,13 +104,14 @@ func EHSCCSRotamer (mol Molecule, trials int, parameters ParameterSet) float64 {
       randx := rand.Float64() * maxminx + minx
       randy := rand.Float64() * maxminy + miny
 
-      a := line{direction: vec3{x: 0, y: 0, z: 1}, origin: vec3{x: randx, y: randy, z: -100}}
+      a := line{direction: vec3{x: 0, y: 0, z: 1}, origin: vec3{x: randx, y: randy, z: -1000}}
       b := lineSpheresTrajectory(a, spheres)
       ab := dotProduct(a.direction,b.direction)
       //abs_a := vecLen(a.direction) // => unit vector anyway
       //abs_b := vecLen(b.direction) // => unit vector anyway
-      hits += 1 - ab // / (abs_a * abs_b)
+      hits +=  1 - (ab) // / (abs_a * abs_b)
     }
+    // probably needs scaling: 52 / 50.0 * 27.6 / 42.3 * ?
     return (float64(hits) / float64(trials)) * maxminx * maxminy
 }
 
@@ -138,7 +146,8 @@ func reflectLineOnSphere(lne line, sph sphere, intsctLineScalar float64) line {
     // == 2 * [v * (x-c)] * (x-c) -v
     x_c := vecMinus(pointOfCollision,sph.center)
     newDir := vecMinus(vecMult(x_c, 2 * dotProduct(lne.direction,x_c)), lne.direction)
-    newDir = vecMult(newDir, 1.0 / vecLen(newDir)) // dont forget to normalize
+    newDir = toUnitVec(newDir) // dont forget to normalize
+    newDir = vecMult(newDir,-1.0) // need to turn it away from sphere !!!
     return line{direction: newDir, origin: lne.origin}
 }
 
@@ -194,33 +203,6 @@ func lineSphereIntersections(lne line, sph sphere)(float64,float64,bool) {
     radicant = math.Sqrt(radicant)
     return -loc - radicant, -loc + radicant, true
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //
