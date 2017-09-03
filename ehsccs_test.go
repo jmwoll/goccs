@@ -22,6 +22,29 @@ import (
         "math"
       )
 
+func TestLineSpheresTrajectory(t *testing.T) {
+    logTestName("TestLineSpheresTrajectory (1.)")
+    lne := line{ origin: vec3{x:0,y:0,z:0}, direction: vec3{x:1,y:0,z:0}}
+    sphs := []sphere{ sphere{ center: vec3{x:5,y:0,z:0}, radius: 1.0} }
+    logTest(fmt.Sprintf("given a line %v",lne))
+    logTest(fmt.Sprintf("and spheres %v",sphs))
+    rslt := lineSpheresTrajectory(lne,sphs)
+    logTest(fmt.Sprintf("the final reflected line is %v",rslt))
+
+
+    logTestName("TestLineSpheresTrajectory (2.)")
+    lne = line{ origin: vec3{x:0,y:0,z:0}, direction: vec3{x:1,y:1,z:0}}
+    lne.direction = toUnitVec(lne.direction)
+    sphs = []sphere{ sphere{ center: vec3{x:5,y:5,z:0}, radius: 1.0} }
+    logTest(fmt.Sprintf("given a line %v",lne))
+    logTest(fmt.Sprintf("and spheres %v",sphs))
+    rslt = lineSpheresTrajectory(lne,sphs)
+    logTest(fmt.Sprintf("the final reflected line is %v",rslt))
+    logTest(rslt.direction.x)
+    assertTrue(rslt.direction.x == -lne.direction.x,//
+      "reflection should yield inverted direction", t)
+
+}
 
 func TestEHSCCSRotamerSimple(t *testing.T) {
     logTestName("TestEHSCCSRotamerSimple")
@@ -101,6 +124,8 @@ func TestEHSCCSCiclosporin(t *testing.T) {
     refccs := 306.0
     assertTrue(math.Abs(ccs - refccs) < 0.5, "CCS values differs from reference", t)
 }
+
+
 
 
 func TestReflectLineOnsphere(t *testing.T) {

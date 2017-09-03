@@ -112,7 +112,7 @@ func EHSCCSRotamer (mol Molecule, trials int, parameters ParameterSet) float64 {
       hits +=  1 - (ab) // / (abs_a * abs_b)
     }
     // probably needs scaling: 52 / 50.0 * 27.6 / 42.3 * ?
-    return (float64(hits) / float64(trials)) * maxminx * maxminy
+    return 2.0/3.0*(float64(hits) / float64(trials)) * maxminx * maxminy
 }
 
 func moleculeToSpheres (mol Molecule, parameters ParameterSet) []sphere {
@@ -127,8 +127,8 @@ func moleculeToSpheres (mol Molecule, parameters ParameterSet) []sphere {
 func lineSpheresTrajectory(lne line, spheres []sphere) line {
     orderCount := 0
     for true {
-      nextIntsctLineScalar,nextIntsctSphere := nextLineSpheresIntersection(lne, spheres)
-      if nextIntsctLineScalar == math.MaxFloat64 { // ???
+      nextIntsctLineScalar,nextIntsctSphere,success := nextLineSpheresIntersection(lne, spheres)
+      if !success { // ???
         break
       }
       pointOfCollision := vecPlus(vecMult(lne.direction, nextIntsctLineScalar),lne.origin)
@@ -138,7 +138,11 @@ func lineSpheresTrajectory(lne line, spheres []sphere) line {
       // if the order is bigger than X, return the current line
       // to prevent too deep trajectories (e.g. ping-pong reflections)
       orderCount += 1
-      if orderCount >= 5 {
+      if orderCount >= 300 {
+        fmt.Println("line was:")
+        fmt.Println(lne)
+        fmt.Println("-->")
+        //panic("should not receive reflections of excessively high order")
         return lne
       }
     }
@@ -155,13 +159,14 @@ func reflectLineOnSphere(lne line, sph sphere, intsctLineScalar float64) line {
     x_c := vecMinus(pointOfCollision,sph.center)
     newDir := vecMinus(vecMult(x_c, 2 * dotProduct(lne.direction,x_c)), lne.direction)
     newDir = toUnitVec(newDir) // dont forget to normalize
-    newDir = vecMult(newDir,-1.0) // need to turn it away from sphere !!!
+    newDir = vecMult(newDir,(-1.0)) // need to turn it away from sphere !!!
     return line{direction: newDir, origin: lne.origin}
 }
 
 
-func nextLineSpheresIntersection(lne line, spheres []sphere) (float64,sphere) {
+func nextLineSpheresIntersection(lne line, spheres []sphere) (float64,sphere,bool) {
     var nextIntsctSphere sphere
+    intsctSuccess := false
     nextIntsctLineScalar := math.MaxFloat64
     for _,sph := range spheres {
       fstIntersection,sndIntersection,success := lineSphereIntersections(lne, sph)
@@ -171,10 +176,11 @@ func nextLineSpheresIntersection(lne line, spheres []sphere) (float64,sphere) {
         if intersectionScalar < nextIntsctLineScalar {
           nextIntsctLineScalar = intersectionScalar
           nextIntsctSphere = sph
+          intsctSuccess = true
         }
       }
     }
-    return nextIntsctLineScalar,nextIntsctSphere
+    return nextIntsctLineScalar,nextIntsctSphere,intsctSuccess
 }
 
 
