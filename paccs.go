@@ -58,7 +58,7 @@ func maxSlice (slice []float64)float64{
 func filterAboveZero(slice []float64) []float64 {
     var rslt []float64
     for _,val := range(slice){
-      if val > 0.001 {
+      if val > 0.00001 {
         rslt = append(rslt,val)
       }
     }

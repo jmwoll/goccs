@@ -139,7 +139,7 @@ func lineSpheresTrajectory(lne line, spheres []sphere) line {
       // to prevent too deep trajectories (e.g. ping-pong reflections)
       orderCount += 1
       if orderCount >= 300 {
-        fmt.Println("line was:")
+        fmt.Println("overflow of trajectory reflection order:")
         fmt.Println(lne)
         fmt.Println("-->")
         //panic("should not receive reflections of excessively high order")
