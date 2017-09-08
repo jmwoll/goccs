@@ -109,10 +109,10 @@ func EHSCCSRotamer (mol Molecule, trials int, parameters ParameterSet) float64 {
       ab := dotProduct(a.direction,b.direction)
       //abs_a := vecLen(a.direction) // => unit vector anyway
       //abs_b := vecLen(b.direction) // => unit vector anyway
-      hits +=  1 - (ab) // / (abs_a * abs_b)
+      hits +=  1 - (ab) // / (abs_a * abs_b) // => unit vector anyway
     }
-    // probably needs scaling: 52 / 50.0 * 27.6 / 42.3 * ?
-    return 2.0/3.0*(float64(hits) / float64(trials)) * maxminx * maxminy
+    // probably needs scaling !!!
+    return 2.0 / 3.0 * (float64(hits) / float64(trials)) * maxminx * maxminy
 }
 
 func moleculeToSpheres (mol Molecule, parameters ParameterSet) []sphere {
