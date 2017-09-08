@@ -17,43 +17,47 @@ package main
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import (
-        "fmt"
-        "testing"
-      )
+	"fmt"
+	"testing"
+)
 
-func assertTrue (predicate bool, msg interface{}, t *testing.T) {
-  if !predicate {
-    logFail(msg)
-    t.Errorf("")
-  } else {
-    logPassed(msg)
-  }
+func assertTrue(predicate bool, msg interface{}, t *testing.T) {
+	if !predicate {
+		logFail(msg)
+		t.Errorf("")
+	} else {
+		logPassed(msg)
+	}
 }
 
-func logPassed (msg interface{}) {
-  fmt.Print("\033[92m")
-  fmt.Print("\t");fmt.Println(msg);
-  fmt.Print("\033[0m")
+func logPassed(msg interface{}) {
+	fmt.Print("\033[92m")
+	fmt.Print("\t")
+	fmt.Println(msg)
+	fmt.Print("\033[0m")
 }
 
-func logTest (msg interface{}) {
-  fmt.Print("\t");fmt.Println(msg)
+func logTest(msg interface{}) {
+	fmt.Print("\t")
+	fmt.Println(msg)
 }
 
-func logTestInline (msg interface{}) {
-  fmt.Print("\t");fmt.Print(msg)
+func logTestInline(msg interface{}) {
+	fmt.Print("\t")
+	fmt.Print(msg)
 }
 
-func logFail (msg interface{}) {
-  fmt.Println("\033[91m")
-  fmt.Print("\t");fmt.Println(msg);
-  fmt.Println("\033[0m")
+func logFail(msg interface{}) {
+	fmt.Println("\033[91m")
+	fmt.Print("\t")
+	fmt.Println(msg)
+	fmt.Println("\033[0m")
 }
 
-
-func logTestName (msg interface{}) {
-  fmt.Println("\033[94m")
-  fmt.Println("")
-  fmt.Print("-- ");fmt.Println(msg);
-  fmt.Println("\033[0m")
+func logTestName(msg interface{}) {
+	fmt.Println("\033[94m")
+	fmt.Println("")
+	fmt.Print("-- ")
+	fmt.Println(msg)
+	fmt.Println("\033[0m")
 }

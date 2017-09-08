@@ -1,9 +1,9 @@
 package main
 
 import (
-  "fmt"
-  "math"
-  "math/rand"
+	"fmt"
+	"math"
+	"math/rand"
 )
 
 // Copyright (C) 2017  Jan Wollschläger <jmw.tau@gmail.com>
@@ -23,167 +23,166 @@ import (
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 type vec3 struct {
-    x float64
-    y float64
-    z float64
+	x float64
+	y float64
+	z float64
 }
 
 type line struct {
-    origin vec3
-    direction vec3
+	origin    vec3
+	direction vec3
 }
 
 type sphere struct {
-    radius float64
-    center vec3
+	radius float64
+	center vec3
 }
 
 func vecEquals(fstVec vec3, sndVec vec3) bool {
-  fstxyz := fmt.Sprintf("%.5f %.5f %.5f",fstVec.x,fstVec.y,fstVec.z)
-  sndxyz := fmt.Sprintf("%.5f %.5f %.5f",fstVec.x,fstVec.y,fstVec.z)
-  return fstxyz == sndxyz
+	fstxyz := fmt.Sprintf("%.5f %.5f %.5f", fstVec.x, fstVec.y, fstVec.z)
+	sndxyz := fmt.Sprintf("%.5f %.5f %.5f", fstVec.x, fstVec.y, fstVec.z)
+	return fstxyz == sndxyz
 }
 
 func vecPlus(fstVec vec3, sndVec vec3) vec3 {
-    return vec3 { x: fstVec.x + sndVec.x, y: fstVec.y + sndVec.y, z: fstVec.z + sndVec.z }
+	return vec3{x: fstVec.x + sndVec.x, y: fstVec.y + sndVec.y, z: fstVec.z + sndVec.z}
 }
 
 func vecMult(vec vec3, scalar float64) vec3 {
-  return vec3 { x: vec.x * scalar, y: vec.y * scalar, z: vec.z * scalar }
+	return vec3{x: vec.x * scalar, y: vec.y * scalar, z: vec.z * scalar}
 }
 
 func vecMinus(fstVec vec3, sndVec vec3) vec3 {
-  return vec3 { x: fstVec.x - sndVec.x, y: fstVec.y - sndVec.y, z: fstVec.z - sndVec.z }
+	return vec3{x: fstVec.x - sndVec.x, y: fstVec.y - sndVec.y, z: fstVec.z - sndVec.z}
 }
 
 func vecDist(fstVec vec3, sndVec vec3) float64 {
-  return vecLen(vecMinus(fstVec, sndVec))
+	return vecLen(vecMinus(fstVec, sndVec))
 }
 
 func vecLenSquare(vec vec3) float64 {
-    return (vec.x*vec.x + vec.y*vec.y + vec.z*vec.z)
+	return (vec.x*vec.x + vec.y*vec.y + vec.z*vec.z)
 }
 
 func vecLen(vec vec3) float64 {
-    return math.Sqrt(vec.x*vec.x + vec.y*vec.y + vec.z*vec.z)
+	return math.Sqrt(vec.x*vec.x + vec.y*vec.y + vec.z*vec.z)
 }
 
 func toUnitVec(vec vec3) vec3 {
-    return vecMult(vec, 1 / vecLen(vec))
+	return vecMult(vec, 1/vecLen(vec))
 }
 
 func dotProduct(fstVec vec3, sndVec vec3) float64 {
-  return fstVec.x * sndVec.x + fstVec.y * sndVec.y + fstVec.z * sndVec.z
+	return fstVec.x*sndVec.x + fstVec.y*sndVec.y + fstVec.z*sndVec.z
 }
 
 // Calculates the exact hard sphere (EHS) collision cross section
 // for a molecule by averaging over all rotamers.
-func EHSCCS (mol Molecule, trialsperrotamer int, numrotamers int, parameters ParameterSet) float64 {
-    var ccssum float64 = 0.0
-    for count := 0; count < numrotamers; count++{
-      mol = RotateMolecule(mol, 4 * math.Pi * rand.Float64(), 4 * math.Pi * rand.Float64(), 4 * math.Pi * rand.Float64())
-      ccssum += EHSCCSRotamer(mol, trialsperrotamer, parameters)
-    }
-    return ccssum / float64(numrotamers)
+func EHSCCS(mol Molecule, trialsperrotamer int, numrotamers int, parameters ParameterSet) float64 {
+	var ccssum float64 = 0.0
+	for count := 0; count < numrotamers; count++ {
+		mol = RotateMolecule(mol, 4*math.Pi*rand.Float64(), 4*math.Pi*rand.Float64(), 4*math.Pi*rand.Float64())
+		ccssum += EHSCCSRotamer(mol, trialsperrotamer, parameters)
+	}
+	return ccssum / float64(numrotamers)
 }
-
 
 // Calculates the exact hard sphere (EHS) collision cross section
 // for a single rotamer.
-func EHSCCSRotamer (mol Molecule, trials int, parameters ParameterSet) float64 {
+func EHSCCSRotamer(mol Molecule, trials int, parameters ParameterSet) float64 {
 
-    spheres := moleculeToSpheres(mol, parameters)
+	spheres := moleculeToSpheres(mol, parameters)
 
-    padding := 5.0 // padding of 5 angstrom sufficient
-    minx := minSlice(mol.xs) - padding; maxx := maxSlice(mol.xs) + padding;
-    miny := minSlice(mol.ys) - padding; maxy := maxSlice(mol.ys) + padding;
+	padding := 5.0 // padding of 5 angstrom sufficient
+	minx := minSlice(mol.xs) - padding
+	maxx := maxSlice(mol.xs) + padding
+	miny := minSlice(mol.ys) - padding
+	maxy := maxSlice(mol.ys) + padding
 
-    maxminx := maxx-minx; maxminy := maxy-miny;
-    hits := 0.0
-    for count := 0; count < trials; count++ {
-      randx := rand.Float64() * maxminx + minx
-      randy := rand.Float64() * maxminy + miny
+	maxminx := maxx - minx
+	maxminy := maxy - miny
+	hits := 0.0
+	for count := 0; count < trials; count++ {
+		randx := rand.Float64()*maxminx + minx
+		randy := rand.Float64()*maxminy + miny
 
-      a := line{direction: vec3{x: 0, y: 0, z: 1}, origin: vec3{x: randx, y: randy, z: -1000}}
-      b := lineSpheresTrajectory(a, spheres)
-      ab := dotProduct(a.direction,b.direction)
-      //abs_a := vecLen(a.direction) // => unit vector anyway
-      //abs_b := vecLen(b.direction) // => unit vector anyway
-      hits +=  1 - (ab) // / (abs_a * abs_b) // => unit vector anyway
-    }
-    // probably needs scaling !!!
-    return 2.0 / 3.0 * (float64(hits) / float64(trials)) * maxminx * maxminy
+		a := line{direction: vec3{x: 0, y: 0, z: 1}, origin: vec3{x: randx, y: randy, z: -1000}}
+		b := lineSpheresTrajectory(a, spheres)
+		ab := dotProduct(a.direction, b.direction)
+		//abs_a := vecLen(a.direction) // => unit vector anyway
+		//abs_b := vecLen(b.direction) // => unit vector anyway
+		hits += 1 - (ab) // / (abs_a * abs_b) // => unit vector anyway
+	}
+	// probably needs scaling !!!
+	return 2.0 / 3.0 * (float64(hits) / float64(trials)) * maxminx * maxminy
 }
 
-func moleculeToSpheres (mol Molecule, parameters ParameterSet) []sphere {
-    var spheres []sphere
-    for idx,atm_lab := range mol.atom_labels {
-      spheres = append(spheres, sphere{center: vec3{x: mol.xs[idx], y: mol.ys[idx], z: mol.zs[idx]}, radius: parameters[atm_lab]})
-    }
-    return spheres
+func moleculeToSpheres(mol Molecule, parameters ParameterSet) []sphere {
+	var spheres []sphere
+	for idx, atm_lab := range mol.atom_labels {
+		spheres = append(spheres, sphere{center: vec3{x: mol.xs[idx], y: mol.ys[idx], z: mol.zs[idx]}, radius: parameters[atm_lab]})
+	}
+	return spheres
 }
-
 
 func lineSpheresTrajectory(lne line, spheres []sphere) line {
-    orderCount := 0
-    for true {
-      nextIntsctLineScalar,nextIntsctSphere,success := nextLineSpheresIntersection(lne, spheres)
-      if !success { // ???
-        break
-      }
-      pointOfCollision := vecPlus(vecMult(lne.direction, nextIntsctLineScalar),lne.origin)
-      lne = reflectLineOnSphere(lne, nextIntsctSphere, nextIntsctLineScalar)
-      lne.origin = pointOfCollision // move ray to current position
-      // count the order of the collision:
-      // if the order is bigger than X, return the current line
-      // to prevent too deep trajectories (e.g. ping-pong reflections)
-      orderCount += 1
-      if orderCount >= 300 {
-        fmt.Println("overflow of trajectory reflection order:")
-        fmt.Println(lne)
-        fmt.Println("-->")
-        //panic("should not receive reflections of excessively high order")
-        return lne
-      }
-    }
-    return lne
+	orderCount := 0
+	for true {
+		nextIntsctLineScalar, nextIntsctSphere, success := nextLineSpheresIntersection(lne, spheres)
+		if !success { // ???
+			break
+		}
+		pointOfCollision := vecPlus(vecMult(lne.direction, nextIntsctLineScalar), lne.origin)
+		lne = reflectLineOnSphere(lne, nextIntsctSphere, nextIntsctLineScalar)
+		lne.origin = pointOfCollision // move ray to current position
+		// count the order of the collision:
+		// if the order is bigger than X, return the current line
+		// to prevent too deep trajectories (e.g. ping-pong reflections)
+		orderCount += 1
+		if orderCount >= 300 {
+			fmt.Println("overflow of trajectory reflection order:")
+			fmt.Println(lne)
+			fmt.Println("-->")
+			//panic("should not receive reflections of excessively high order")
+			return lne
+		}
+	}
+	return lne
 }
-
 
 func reflectLineOnSphere(lne line, sph sphere, intsctLineScalar float64) line {
-    pointOfCollision := vecPlus(vecMult(lne.direction, intsctLineScalar),lne.origin)
-    // see https://math.stackexchange.com/questions/2334939/reflection-of-line-on-a-sphere/2334963?noredirect=1#comment4807112_2334963
-    // 2 * [(line-direction) * (point-of-collision - center-of-sphere)] *
-    // (point-of-collision - center-of-sphere) - (line-direction)
-    // == 2 * [v * (x-c)] * (x-c) -v
-    x_c := vecMinus(pointOfCollision,sph.center)
-    newDir := vecMinus(vecMult(x_c, 2 * dotProduct(lne.direction,x_c)), lne.direction)
-    newDir = toUnitVec(newDir) // dont forget to normalize
-    newDir = vecMult(newDir,(-1.0)) // need to turn it away from sphere !!!
-    return line{direction: newDir, origin: lne.origin}
+	pointOfCollision := vecPlus(vecMult(lne.direction, intsctLineScalar), lne.origin)
+	// see https://math.stackexchange.com/questions/2334939/reflection-of-line-on-a-sphere/2334963?noredirect=1#comment4807112_2334963
+	// 2 * [(line-direction) * (point-of-collision - center-of-sphere)] *
+	// (point-of-collision - center-of-sphere) - (line-direction)
+	// == 2 * [v * (x-c)] * (x-c) -v
+	x_c := vecMinus(pointOfCollision, sph.center)
+	newDir := vecMinus(vecMult(x_c, 2*dotProduct(lne.direction, x_c)), lne.direction)
+	newDir = toUnitVec(newDir)       // dont forget to normalize
+	newDir = vecMult(newDir, (-1.0)) // need to turn it away from sphere !!!
+	return line{direction: newDir, origin: lne.origin}
 }
 
-
-func nextLineSpheresIntersection(lne line, spheres []sphere) (float64,sphere,bool) {
-    var nextIntsctSphere sphere
-    intsctSuccess := false
-    nextIntsctLineScalar := math.MaxFloat64
-    for _,sph := range spheres {
-      fstIntersection,sndIntersection,success := lineSphereIntersections(lne, sph)
-      if !success { continue }
-      intersections := filterAboveZero([]float64{fstIntersection,sndIntersection})
-      for _,intersectionScalar := range intersections {
-        if intersectionScalar < nextIntsctLineScalar {
-          nextIntsctLineScalar = intersectionScalar
-          nextIntsctSphere = sph
-          intsctSuccess = true
-        }
-      }
-    }
-    return nextIntsctLineScalar,nextIntsctSphere,intsctSuccess
+func nextLineSpheresIntersection(lne line, spheres []sphere) (float64, sphere, bool) {
+	var nextIntsctSphere sphere
+	intsctSuccess := false
+	nextIntsctLineScalar := math.MaxFloat64
+	for _, sph := range spheres {
+		fstIntersection, sndIntersection, success := lineSphereIntersections(lne, sph)
+		if !success {
+			continue
+		}
+		intersections := filterAboveZero([]float64{fstIntersection, sndIntersection})
+		for _, intersectionScalar := range intersections {
+			if intersectionScalar < nextIntsctLineScalar {
+				nextIntsctLineScalar = intersectionScalar
+				nextIntsctSphere = sph
+				intsctSuccess = true
+			}
+		}
+	}
+	return nextIntsctLineScalar, nextIntsctSphere, intsctSuccess
 }
-
-
 
 // computes the intersections of the line lne with the sphere sph:
 //  according to https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection
@@ -197,26 +196,25 @@ func nextLineSpheresIntersection(lne line, spheres []sphere) (float64,sphere,boo
 //    loc := L * (o - c)
 //  and
 //    oc := ||o - c||^2
-func lineSphereIntersections(lne line, sph sphere)(float64,float64,bool) {
+func lineSphereIntersections(lne line, sph sphere) (float64, float64, bool) {
 
-    if math.Abs(vecLen(lne.direction)-1.0) > 0.00001 {
-        panic("non-unit vector encountered for direction of line in lineSphereIntersections")
-    }
-    locVec := vec3{ x: (lne.origin.x - sph.center.x) * lne.direction.x,
-              y: (lne.origin.y - sph.center.y) * lne.direction.y,
-              z: (lne.origin.z - sph.center.z) * lne.direction.z,
-              }
-    ocVec := vecMinus(lne.origin, sph.center)
-    loc := locVec.x + locVec.y + locVec.z
-    oc := vecLenSquare(ocVec)
+	if math.Abs(vecLen(lne.direction)-1.0) > 0.00001 {
+		panic("non-unit vector encountered for direction of line in lineSphereIntersections")
+	}
+	locVec := vec3{x: (lne.origin.x - sph.center.x) * lne.direction.x,
+		y: (lne.origin.y - sph.center.y) * lne.direction.y,
+		z: (lne.origin.z - sph.center.z) * lne.direction.z,
+	}
+	ocVec := vecMinus(lne.origin, sph.center)
+	loc := locVec.x + locVec.y + locVec.z
+	oc := vecLenSquare(ocVec)
 
-    radicant := loc * loc - oc + sph.radius * sph.radius
-    if radicant < 0.0 {
-      return 0.0, 0.0, false
-    }
-    radicant = math.Sqrt(radicant)
-    return -loc - radicant, -loc + radicant, true
+	radicant := loc*loc - oc + sph.radius*sph.radius
+	if radicant < 0.0 {
+		return 0.0, 0.0, false
+	}
+	radicant = math.Sqrt(radicant)
+	return -loc - radicant, -loc + radicant, true
 }
-
 
 //
