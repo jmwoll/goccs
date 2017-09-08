@@ -58,7 +58,7 @@ func TestEHSCCSMethane(t *testing.T) {
 	logTestName("TestEHSCCSRotamerMethane")
 	mol := Loadxyzfile("xyz/methane.xyz")
 	logTest(mol)
-	ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+	ccs := EHSCCS(mol, 1000, 3000, EHSParametersforname("mobcal"))
 	logTest("EHS CCS:")
 	logTest(ccs)
 	assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
@@ -69,7 +69,7 @@ func TestEHSCCSMethane(t *testing.T) {
 func TestEHSCCSButane(t *testing.T) {
 	logTestName("TestEHSCCSRotamerButane")
 	mol := Loadxyzfile("xyz/butane.xyz")
-	ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+	ccs := EHSCCS(mol, 1000, 3000, EHSParametersforname("mobcal"))
 	logTest("EHS CCS:")
 	logTest(ccs)
 	assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
@@ -80,7 +80,7 @@ func TestEHSCCSButane(t *testing.T) {
 func TestEHSCCSPentane(t *testing.T) {
 	logTestName("TestEHSCCSRotamerPentane")
 	mol := Loadxyzfile("xyz/pentane.xyz")
-	ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+	ccs := EHSCCS(mol, 1000, 3000, EHSParametersforname("mobcal"))
 	logTest("EHS CCS:")
 	logTest(ccs)
 	assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
@@ -91,7 +91,7 @@ func TestEHSCCSPentane(t *testing.T) {
 func TestEHSCCSOctabenzone(t *testing.T) {
 	logTestName("TestEHSCCSOctabenzone")
 	mol := Loadxyzfile("xyz/octabenzone.xyz")
-	ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+	ccs := EHSCCS(mol, 1000, 3000, EHSParametersforname("mobcal"))
 	logTest("EHS CCS:")
 	logTest(ccs)
 	assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
@@ -102,7 +102,7 @@ func TestEHSCCSOctabenzone(t *testing.T) {
 func TestEHSCCSAbacavir(t *testing.T) {
 	logTestName("TestEHSCCSAbacavir")
 	mol := Loadxyzfile("xyz/abacavir.xyz")
-	ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+	ccs := EHSCCS(mol, 1000, 3000, EHSParametersforname("mobcal"))
 	logTest("EHS CCS:")
 	logTest(ccs)
 	assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
@@ -113,7 +113,7 @@ func TestEHSCCSAbacavir(t *testing.T) {
 func TestEHSCCSPaclitaxel(t *testing.T) {
 	logTestName("TestEHSCCSPaclitaxel")
 	mol := Loadxyzfile("xyz/paclitaxel.xyz")
-	ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+	ccs := EHSCCS(mol, 1000, 3000, EHSParametersforname("mobcal"))
 	logTest("EHS CCS:")
 	logTest(ccs)
 	assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
@@ -124,7 +124,7 @@ func TestEHSCCSPaclitaxel(t *testing.T) {
 func TestEHSCCSCiclosporin(t *testing.T) {
 	logTestName("TestEHSCCSCiclosporin")
 	mol := Loadxyzfile("xyz/ciclosporin.xyz")
-	ccs := EHSCCS(mol, 10000, 3000, EHSParametersforname("mobcal"))
+	ccs := EHSCCS(mol, 1000, 3000, EHSParametersforname("mobcal"))
 	logTest("EHS CCS:")
 	logTest(ccs)
 	assertTrue(ccs > 0, "CCS values always non-zero and positive", t)
