@@ -10,6 +10,8 @@ specified in the JSON format:
 goccs -xyzfile example.xyz -approximation PA -parameters '{"H": 1.23, "C": 2.34, "N": 3.45, "O": 4.56}'
 ```
 
+Binaries for several platforms (Linux, OSX, Windows) can be found under ```bin/``` .
+
 Citations for the parameters can be found below:
 
 Mobcal parameters:
