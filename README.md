@@ -16,9 +16,10 @@ Mobcal parameters:
 ```
 J. Phys. Chem. 1996, 100, 16082-16086;
 J. Phys. Chem. A 1997, 101, 968.
+Chem. Phys. Lett. 1996, 261, 86-91.
 ```
 
 Default parameters:
 ```
-Chem. Phys. Lett. 1996, 261, 86-91.
+J. Phys. Chem. B, Vol. 114, No. 2, 2010.
 ```
