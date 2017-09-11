@@ -149,7 +149,7 @@ func Loadxyzstring(xyzstring string) Molecule {
 	var atoms_y []float64
 	var atoms_z []float64
 	for count, line := range strings.Split(strings.TrimSuffix(xyzstring, "\n"), "\n") {
-		line = strings.Trim(line," \t")
+		line = strings.Trim(line, " \t")
 		err := false
 		if len(strings.Split(line, " ")) > 3 {
 			atom_label := strings.Split(line, " ")[0]
