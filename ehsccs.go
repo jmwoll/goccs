@@ -1,11 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"math"
-	"math/rand"
-)
-
 // Copyright (C) 2017  Jan Wollschläger <jmw.tau@gmail.com>
 // This file is part of goccs.
 //
@@ -21,6 +15,19 @@ import (
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+import (
+	"fmt"
+	"math"
+	"math/rand"
+	"time"
+)
+
+func init(){
+	// be careful with math/rand as its non-deterministic!
+	// thus, we have to set a seed:
+	rand.Seed(time.Now().UTC().UnixNano())
+}
 
 type vec3 struct {
 	x float64

@@ -22,7 +22,14 @@ import (
 	"math/rand"
 	"strconv"
 	"strings"
+	"time"
 )
+
+func init(){
+	// be careful with math/rand as its non-deterministic!
+	// thus, we have to set a seed:
+	rand.Seed(time.Now().UTC().UnixNano())
+}
 
 // a molecule consists of the list of atom labels, the x,y,z coordinates
 // of the atoms, so it is essentially just represented as the list of its
@@ -63,6 +70,7 @@ func filterAboveZero(slice []float64) []float64 {
 	}
 	return rslt
 }
+
 
 // Calculates the projection approximation collision cross section
 // for a molecule by averaging over all rotamers.
