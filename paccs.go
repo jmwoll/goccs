@@ -149,6 +149,8 @@ func RotateMolecule(mol Molecule, rotx float64, roty float64, rotz float64) Mole
 // a string of the xyz-molecule-file format.
 func Loadxyzstring(xyzstring string) Molecule {
 	xyzstring = strings.Replace(xyzstring, "\t", " ", -1)
+	// Remove annoying control characters in windows
+	xyzstring = strings.Replace(xyzstring, "\r", "", -1)
 	for strings.Contains(xyzstring, "  ") {
 		xyzstring = strings.Replace(xyzstring, "  ", " ", 1)
 	}
