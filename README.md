@@ -1,13 +1,19 @@
 
 goccs is a parallel cross platform CCS prediction software implemented in go.
-CCS values can be easily computed at the command line:
+
+CCS values can be easily computed in few steps:
+
+![CCS calculation in simple steps.](https://github.com/jmwoll/goccs/blob/master/doc/animation_usage.gif)
+
+Running the command
 ```
-goccs -xyzfile example.xyz -approximation PA -parameters mobcal
+goccs_windows_386 -xyzfile example.xyz -approximation PA -parameters mobcal
 ```
-where approximation is either 'PA' or 'EHS'. Custom parameters can be
+gives out the CCS value in angstrom^2, where approximation is either 'PA' or 'EHS'.
+Note that the name of the executable varies depending on the platform used. Custom parameters can be
 specified in the JSON format:
 ```
-goccs -xyzfile example.xyz -approximation PA -parameters '{"H": 1.23, "C": 2.34, "N": 3.45, "O": 4.56}'
+goccs_windows_386 -xyzfile example.xyz -approximation PA -parameters '{"H": 1.23, "C": 2.34, "N": 3.45, "O": 4.56}'
 ```
 
 Binaries for several platforms (Linux, OSX, Windows) can be found under ```bin/``` .
@@ -15,7 +21,7 @@ Binaries for several platforms (Linux, OSX, Windows) can be found under ```bin/`
 The number of processes are controlled via the ```-processes``` flag (defaults to 10).
 For example, the command
 ```
-goccs -xyzfile example.xyz -approximation PA -parameters mobcal -processes 100
+goccs_windows_386 -xyzfile example.xyz -approximation PA -parameters mobcal -processes 100
 ```
 uses 100 processes in parallel.
 
