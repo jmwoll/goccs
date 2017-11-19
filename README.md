@@ -36,5 +36,5 @@ Chem. Phys. Lett. 1996, 261, 86-91.
 
 Default parameters:
 ```
-J. Phys. Chem. B, Vol. 114, No. 2, 2010.
+C.-K. Siu, Y. Guo, I.S. Saminathan, A. C. Hopkinson, K.M. Siu, Optimization of ion-mobility calculation for conformational analyses, J. Phys. Chem. B, 2010, 114, 1204-1212.
 ```
