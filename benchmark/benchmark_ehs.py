@@ -22,7 +22,7 @@ import numpy as np
 
 
 def test_pa_ccs():
-	pa_ccs_ref = {
+    pa_ccs_ref = {
             "methane": 27.602, "ethane": 36.477, "propane": 43.653,
             "butane": 52.101, "pentane": 59.653, "adamantane": 68.247,
             "penguinone": 77.377, "barrelene": 58.639,
@@ -35,30 +35,30 @@ def test_pa_ccs():
             "alprenolol": 123.85, "trioxifene": 182.14,
             "methylaminoethanol": 56.038,
             "nanokid": 246.78,
-	}
-	pxs,pys=[],[]
-	for name in pa_ccs_ref:
-		ref_ccs = pa_ccs_ref[name]
-		cmd = "~/go/src/goccs/bin/goccs_linux_386 --xyzfile ~/go/src/goccs/xyz/{}.xyz --parameters mobcal --approximation EHS"
-		cmd = cmd.format(name)
-		ccs = str(subprocess.check_output(cmd, shell=True),'utf-8')
-		ccs = ccs.strip().split('\n')[-1]
-		ccs = float(ccs)
+    }
+    pxs,pys=[],[]
+    for name in pa_ccs_ref:
+        ref_ccs = pa_ccs_ref[name]
+        cmd = "~/go/src/goccs/bin/goccs_linux_386 --xyzfile ~/go/src/goccs/xyz/{}.xyz --parameters mobcal --approximation EHS"
+        cmd = cmd.format(name)
+        ccs = str(subprocess.check_output(cmd, shell=True),'utf-8')
+        ccs = ccs.strip().split('\n')[-1]
+        ccs = float(ccs)
 		#ccs = os.system()
-		print('{} (should be {})'.format(ccs,ref_ccs))
-		pxs.append(ccs)
-		pys.append(ref_ccs)
-	slope, intercept, r_value, p_value, std_err = linregress(pxs, pys)
-	fit_xs = np.linspace(min(pxs),max(pxs),50)
-	fit_ys = [slope*fx+intercept for fx in fit_xs]
-	plt.plot(fit_xs,fit_ys,'--',color='black')
-	plt.plot(pxs,pys,'ro')
-	plt.text(fit_xs[25],fit_ys[25],'R2 = {:.6f}'.format(r_value**2))
+        print('{} (should be {})'.format(ccs,ref_ccs))
+        pxs.append(ccs)
+        pys.append(ref_ccs)
+    slope, intercept, r_value, p_value, std_err = linregress(pxs, pys)
+    fit_xs = np.linspace(min(pxs),max(pxs),50)
+    fit_ys = [slope*fx+intercept for fx in fit_xs]
+    plt.plot(fit_xs,fit_ys,'--',color='black')
+    plt.plot(pxs,pys,'ro')
+    plt.text(fit_xs[25],fit_ys[25],'R2 = {:.6f}'.format(r_value**2))
     plt.title("EHS Benchmark")
-	plt.xlabel("CCS (goccs) / A²")
-	plt.ylabel("CCS (literature) / A²")
-	plt.savefig('benchmark_ehs.png')
-	plt.show()
+    plt.xlabel("CCS (goccs) / A²")
+    plt.ylabel("CCS (literature) / A²")
+    plt.savefig('benchmark_ehs.png')
+    plt.show()
 
 
 
