@@ -1,10 +1,13 @@
 
+
+## About
 goccs is a parallel cross platform CCS prediction software implemented in go.
 
-CCS values can be easily computed in few steps:
+CCS values can be easily computed in a few steps:
 
 ![CCS calculation in simple steps.](https://github.com/jmwoll/goccs/blob/master/doc/animation_usage.gif)
 
+## Overview
 Running the command
 ```
 goccs_windows_386.exe -xyzfile example.xyz -approximation PA -parameters mobcal
@@ -38,3 +41,17 @@ Default parameters:
 ```
 C.-K. Siu, Y. Guo, I. S. Saminathan, A. C. Hopkinson, K. M. Siu, Optimization of ion-mobility calculation for conformational analyses, J. Phys. Chem. B, 2010, 114, 1204-1212.
 ```
+
+## Benchmark
+Here a Projection Approximation (PA) benchmark against the established Mobcal software:
+
+![PA Benchmark.](https://github.com/jmwoll/goccs/blob/master/benchmark/benchmark_pa.png)
+
+The PA CCS values exhibit excellent agreement with the literature values. For the
+exact hard sphere (EHS) method, we observe slight implementation-dependent
+differences to the Mobcal implementation. Generally, values predicted by goccs tend
+to lie nearer to the Trajectory Method (TM) values than the Mobcal calculation.
+
+Here an Exact Hard Sphere Scattering (EHS) benchmark against the established Mobcal software:
+
+![PA Benchmark.](https://github.com/jmwoll/goccs/blob/master/benchmark/benchmark_ehs.png)

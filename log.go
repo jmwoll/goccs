@@ -1,6 +1,6 @@
 package main
 
-// Copyright (C) 2017  Jan Wollschläger <jmw.tau@gmail.com>
+// Copyright (C) 2017-2018  Jan Wollschläger <janmwoll@gmail.com>
 // This file is part of goccs.
 //
 // goccs is free software: you can redistribute it and/or modify
